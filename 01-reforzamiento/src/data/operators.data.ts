@@ -5,7 +5,7 @@ export interface Operator {
 }
 
 //type Unit = 'DEVGRU' | 'SEAL Team 6';
-enum Unit {
+export enum Unit {
   DEVGRU = "DEVGRU",
   SEAL_Team_6 = "SEAL Team 6",
 }
