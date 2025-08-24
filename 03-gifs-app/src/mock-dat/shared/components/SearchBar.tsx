@@ -1,21 +1,25 @@
-export interface SearchProps {
-  onSearch: (query: string) => void;
+import { useState, type KeyboardEvent } from "react";
+
+export interface Props {
+  onQuery: (query: string) => void;
   placeholder?: string;
 }
 
-export const SearchBar = ({ onSearch, placeholder = "Buscar..." }: SearchProps) => {
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      const value = (e.target as HTMLInputElement).value.trim();
-      onSearch(value);
-    }
-  };
+export const SearchBar = ({ onQuery, placeholder = "Buscar..." }: Props) => {
 
-  const handleClick = () => {
-    const input = document.getElementById("search-input") as HTMLInputElement | null;
-    const value = input?.value.trim() ?? "";
-    onSearch(value);
-  };
+
+    const [query, setQuery] = useState('');
+
+    const handleSearch = () => {
+      onQuery(query);
+      // setQuery('');
+    };
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+        handleSearch();
+      }
+    };
 
   return (
     <div className="search-container">
@@ -23,9 +27,11 @@ export const SearchBar = ({ onSearch, placeholder = "Buscar..." }: SearchProps) 
         id="search-input"
         type="text"
         placeholder={placeholder}
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <button onClick={handleClick}>Buscar</button>
+      <button onClick={handleSearch}>Buscar</button>
     </div>
   );
 };

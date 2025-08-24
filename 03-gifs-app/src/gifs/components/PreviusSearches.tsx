@@ -1,22 +1,25 @@
+import type { FC } from "react";
+
 interface PreviousSearchesProps {
-  items?: string[];
-  onSelect?: (query: string) => void;
+  searches: string[];
+  onLabelClicked: (term: string) => void;
 }
 
-export const PreviousSearches = ({
-  items = ["Call of Duty", "Battlefield", "The Division II", "Halo"],
-  onSelect,
-}: PreviousSearchesProps) => {
+export const PreviousSearches: FC<PreviousSearchesProps> = ({
+  searches,
+  onLabelClicked
+}) => {
   return (
     <div className="previous-searches">
       <h2>Búsquedas Previas</h2>
       <ul className="previous-searches-list">
-        {items.map((item) => (
+        {searches.map((term) => (
           <li
-            key={item}
-            onClick={() => onSelect?.(item)}
+            key={term}
+            onClick={() => onLabelClicked(term)}
+            style={{ cursor: "pointer" }}
           >
-            {item}
+            {term}
           </li>
         ))}
       </ul>
